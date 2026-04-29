@@ -7,24 +7,20 @@ from selenium.webdriver.chrome.options import Options
 
 
 def login_github(driver):
-    """Abre o GitHub para login manual."""
     driver.get("https://github.com/login")
     input("| Faça login no GitHub e pressione Enter para continuar...")
 
 
 def login_linkedin(driver):
-    """Abre o LinkedIn para login manual."""
     driver.get("https://www.linkedin.com/login")
     input("| Faça login no LinkedIn e pressione Enter para continuar...")
 
 
 def extract_pronouns_or_linkedin(driver, author):
-    """Extrai o pronome do GitHub, e se não encontrar, tenta no LinkedIn."""
     github_url = f"https://github.com/{author}"
     driver.get(github_url)
     time.sleep(3)
 
-    # Tenta encontrar pronome no GitHub
     try:
         pronoun_element = driver.find_element(
             By.XPATH, "//span[contains(@class, 'p-nickname')]//following-sibling::span"
