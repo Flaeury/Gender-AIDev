@@ -1,21 +1,20 @@
 import pandas as pd
 
-input_file_1 = 'data/dataset-agents.xlsx'
-input_file_2 = 'data/github_pronouns.xlsx'
-output_file = 'data/user_genero_comment.xlsx'
+input_file_1 = 'data/dataset-all-agents.xlsx'
+input_file_2 = 'data/ATUALIZADO_user_pronouns.xlsx'
+output_file = 'data/user_gender_all_agents.xlsx'
 
 df1 = pd.read_excel(input_file_1)
 df2 = pd.read_excel(input_file_2)
 
-df2_filtered = df2[df2['gender'].isin(['he/him', 'she/her'])]
+df2_all = df2[df2['gender'].isin(['he/him', 'she/her'])]
 
-merged_df = pd.merge(df1, df2_filtered, on="user", how="inner")
+merged_df = pd.merge(df1, df2_all, on="user", how="inner")
 
 final_columns = [
-    'pr_id', 'user', 'gender', 'body', 'agent',
-     'created_at_comment', 'type', 'title',
-    'body_pr', 'merged_at', 'state_pr_final',
-    'created_at', 'closed_at'
+    "pr_id", "user", "gender", "agent", "source_type", "seq_comments", "title", "body",
+    "created_at", "body_pr", "merged_at", "state_pr_final",
+    "pr_created_at", "pr_closed_at"
 ]
 
 existing_columns = [col for col in final_columns if col in merged_df.columns]
