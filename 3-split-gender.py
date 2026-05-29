@@ -1,28 +1,34 @@
 import pandas as pd
 
-# Nomes dos CSVs de saída
-he_file = ''
-she_file = ''
+# ==========================================
+# LOAD DATASET
+# ==========================================
+df = pd.read_excel(
+    'data/user_gender_filtered_agents.xlsx'
+)
 
-with open('ARQUIVO', newline='', encoding='utf-8') as f:
-    leitor = pd.read_excel(f)
-    cabecalho = leitor.columns
+# ==========================================
+# FILTER DATA
+# ==========================================
+df_he = df[
+    df['gender'] == 'he/him'
+]
 
-    idx_genero = cabecalho.index('gender')
+df_she = df[
+    df['gender'] == 'she/her'
+]
 
-    with open(he_file, 'w', newline='', encoding='utf-8') as f_he, \
-            open(she_file, 'w', newline='', encoding='utf-8') as f_she:
+# ==========================================
+# SAVE EXCEL FILES
+# ==========================================
+df_he.to_excel(
+    'he_him.xlsx',
+    index=False
+)
 
-        escritor_he = pd.ExcelWriter(f_he, engine='xlsxwriter')
-        escritor_she = pd.ExcelWriter(f_she, engine='xlsxwriter')
+df_she.to_excel(
+    'she_her.xlsx',
+    index=False
+)
 
-        escritor_he.writerow(cabecalho)
-        escritor_she.writerow(cabecalho)
-
-        for linha in leitor:
-            if linha[idx_genero] == 'he/him':
-                escritor_he.writerow(linha)
-            elif linha[idx_genero] == 'she/her':
-                escritor_she.writerow(linha)
-
-print("Dados divididos em dois CSVs.")
+print("Excel files created successfully.")
